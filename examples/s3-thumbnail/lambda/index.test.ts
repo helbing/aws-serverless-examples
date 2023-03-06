@@ -32,7 +32,7 @@ describe("Run lambda handler", () => {
         name: "demo",
       },
       object: {
-        key: "xxx.png",
+        key: "test.png",
       },
     },
   } as S3EventRecord)
@@ -135,10 +135,10 @@ describe("Run lambda handler", () => {
 
 describe("Check image type", () => {
   test("Expect match success", () => {
-    expect(typeMatch(["png"], "xxx.png")).toBeTruthy()
+    expect(typeMatch(["png"], "test.png")).toBeTruthy()
   })
 
   test("Expect match failed", () => {
-    expect(typeMatch(["jpg"], "xxx.png")).toBeFalsy()
+    expect(typeMatch(["jpg"], "test.png")).toBeFalsy()
   })
 })

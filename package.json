@@ -11,10 +11,7 @@
     "typescript"
   ],
   "scripts": {
-    "clean": "turbo run clean",
-    "build": "turbo run build",
-    "deploy": "turbo run deploy",
-    "destroy": "turbo run destroy",
+    "cdk": "turbo run cdk --",
     "test": "turbo run test",
     "testu": "turbo run testu",
     "test:integ": "turbo run test:integ"

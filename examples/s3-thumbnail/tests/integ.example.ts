@@ -9,11 +9,11 @@ import {
 import { S3Thumbnail } from "../lib/construct"
 
 const app = new App()
-const testCase = new IntegTestCaseStack(app, "integ-test-s3-thumbnail", {
+const testCase = new IntegTestCaseStack(app, "IntegTestCaseStack", {
   diffAssets: true,
   stackUpdateWorkflow: true,
 })
-const thumbnail = new S3Thumbnail(testCase, "thumbnail", {
+const thumbnail = new S3Thumbnail(testCase, "TestConstruct", {
   bucketName: "aws-serverless-examples-s3-thumbnail-bucket",
 })
 
