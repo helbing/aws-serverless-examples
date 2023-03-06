@@ -5,7 +5,7 @@
     "cdk": "cdk",
     "test": "jest --detectOpenHandles",
     "testu": "jest --updateSnapshot --detectOpenHandles",
-    "test:integ": "integ-runner --directory tests -l typescript --parallel-regions ap-northeast-1 --update-on-failed -v"
+    "test:integ": "integ-runner --directory tests -l typescript --parallel-regions $CDK_DEPLOY_REGION --update-on-failed -v"
   },
   "author": "helbing",
   "license": "MIT",
