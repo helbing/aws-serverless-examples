@@ -1,0 +1,35 @@
+{
+  "name": "s3-thumbnail",
+  "version": "1.0.0",
+  "description": "s3 => generate thumbnail lambda => destination s3",
+  "workspaces": [
+    "examples/*"
+  ],
+  "keywords": [
+    "aws",
+    "serverless",
+    "typescript"
+  ],
+  "scripts": {
+    "clean": "turbo run clean",
+    "build": "turbo run build",
+    "deploy": "turbo run deploy",
+    "destroy": "turbo run destroy",
+    "test": "turbo run test",
+    "testu": "turbo run testu",
+    "test:integ": "turbo run test:integ"
+  },
+  "author": "helbing",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.4",
+    "turbo": "^1.8.3"
+  }
+}
