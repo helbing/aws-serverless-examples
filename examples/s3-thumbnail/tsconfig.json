@@ -1,7 +1,3 @@
 {
-  "extends": "@ase/tsconfig/recommended",
-  "include": [
-    "bin",
-    "lib",
-  ]
+  "extends": "@ase/tsconfig/recommended"
 }
