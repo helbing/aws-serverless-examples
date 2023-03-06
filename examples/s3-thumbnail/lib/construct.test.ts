@@ -34,8 +34,16 @@ describe("Test construct build", () => {
       bucketName: "demo",
     })
     const template = Template.fromStack(stack).toJSON()
-    template["Resources"]["thumbnail56C9CCFB"]["Properties"]["Code"]["S3Key"] =
-      expect.any(String)
-    expect(template).toMatchSnapshot()
+    expect(template).toMatchSnapshot({
+      Resources: {
+        TestConstructthumbnail2E204B2A: {
+          Properties: {
+            Code: {
+              S3Key: expect.any(String),
+            },
+          },
+        },
+      },
+    })
   })
 })

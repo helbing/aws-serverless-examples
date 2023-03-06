@@ -201,7 +201,7 @@ def submit_response(event: dict, context, response_status: str, error_message: s
             [
               "Lambda function for auto-deleting objects in ",
               {
-                "Ref": "thumbnailbucket33B693F5",
+                "Ref": "TestConstructbucket9344DFEE",
               },
               " S3 bucket.",
             ],
@@ -242,10 +242,233 @@ def submit_response(event: dict, context, response_status: str, error_message: s
       },
       "Type": "AWS::IAM::Role",
     },
-    "thumbnail56C9CCFB": {
+    "TestConstructbucket9344DFEE": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "BucketName": "demo",
+        "Tags": [
+          {
+            "Key": "aws-cdk:auto-delete-objects",
+            "Value": "true",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "TestConstructbucketAllowBucketNotificationsToTestStackTestConstructthumbnail496A79F91B80FF1A": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "TestConstructthumbnail2E204B2A",
+            "Arn",
+          ],
+        },
+        "Principal": "s3.amazonaws.com",
+        "SourceAccount": {
+          "Ref": "AWS::AccountId",
+        },
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "TestConstructbucket9344DFEE",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "TestConstructbucketAutoDeleteObjectsCustomResourceBC4E1B6D": {
+      "DeletionPolicy": "Delete",
       "DependsOn": [
-        "thumbnailServiceRoleDefaultPolicy77FF3C45",
-        "thumbnailServiceRole64148882",
+        "TestConstructbucketPolicy91D5972F",
+      ],
+      "Properties": {
+        "BucketName": {
+          "Ref": "TestConstructbucket9344DFEE",
+        },
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3AutoDeleteObjects",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "TestConstructbucketNotificationsB89BAFAF": {
+      "DependsOn": [
+        "TestConstructbucketAllowBucketNotificationsToTestStackTestConstructthumbnail496A79F91B80FF1A",
+      ],
+      "Properties": {
+        "BucketName": {
+          "Ref": "TestConstructbucket9344DFEE",
+        },
+        "Managed": true,
+        "NotificationConfiguration": {
+          "LambdaFunctionConfigurations": [
+            {
+              "Events": [
+                "s3:ObjectCreated:*",
+              ],
+              "LambdaFunctionArn": {
+                "Fn::GetAtt": [
+                  "TestConstructthumbnail2E204B2A",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+        },
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3BucketNotifications",
+    },
+    "TestConstructbucketPolicy91D5972F": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "TestConstructbucket9344DFEE",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::GetAtt": [
+                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "TestConstructbucket9344DFEE",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "TestConstructbucket9344DFEE",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "TestConstructdestBucketAutoDeleteObjectsCustomResource0F7D9A26": {
+      "DeletionPolicy": "Delete",
+      "DependsOn": [
+        "TestConstructdestBucketPolicy40853457",
+      ],
+      "Properties": {
+        "BucketName": {
+          "Ref": "TestConstructdestBucketBA843F6A",
+        },
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3AutoDeleteObjects",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "TestConstructdestBucketBA843F6A": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "BucketName": "demo-resized",
+        "Tags": [
+          {
+            "Key": "aws-cdk:auto-delete-objects",
+            "Value": "true",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "TestConstructdestBucketPolicy40853457": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "TestConstructdestBucketBA843F6A",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::GetAtt": [
+                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "TestConstructdestBucketBA843F6A",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "TestConstructdestBucketBA843F6A",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "TestConstructthumbnail2E204B2A": {
+      "DependsOn": [
+        "TestConstructthumbnailServiceRoleDefaultPolicy83483DBA",
+        "TestConstructthumbnailServiceRoleC1AF2B65",
       ],
       "Properties": {
         "Code": {
@@ -258,7 +481,7 @@ def submit_response(event: dict, context, response_status: str, error_message: s
           "Variables": {
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "DEST_BUCKET": {
-              "Ref": "thumbnaildestBucket603418CB",
+              "Ref": "TestConstructdestBucketBA843F6A",
             },
             "RESIZE_WIDTH": "100",
             "SUPPORT_IMAGE_TYPES": "png,jpg",
@@ -268,7 +491,7 @@ def submit_response(event: dict, context, response_status: str, error_message: s
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
-            "thumbnailServiceRole64148882",
+            "TestConstructthumbnailServiceRoleC1AF2B65",
             "Arn",
           ],
         },
@@ -280,7 +503,7 @@ def submit_response(event: dict, context, response_status: str, error_message: s
       },
       "Type": "AWS::Lambda::Function",
     },
-    "thumbnailServiceRole64148882": {
+    "TestConstructthumbnailServiceRoleC1AF2B65": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -311,7 +534,7 @@ def submit_response(event: dict, context, response_status: str, error_message: s
       },
       "Type": "AWS::IAM::Role",
     },
-    "thumbnailServiceRoleDefaultPolicy77FF3C45": {
+    "TestConstructthumbnailServiceRoleDefaultPolicy83483DBA": {
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -333,7 +556,7 @@ def submit_response(event: dict, context, response_status: str, error_message: s
               "Resource": [
                 {
                   "Fn::GetAtt": [
-                    "thumbnailbucket33B693F5",
+                    "TestConstructbucket9344DFEE",
                     "Arn",
                   ],
                 },
@@ -343,7 +566,7 @@ def submit_response(event: dict, context, response_status: str, error_message: s
                     [
                       {
                         "Fn::GetAtt": [
-                          "thumbnailbucket33B693F5",
+                          "TestConstructbucket9344DFEE",
                           "Arn",
                         ],
                       },
@@ -367,7 +590,7 @@ def submit_response(event: dict, context, response_status: str, error_message: s
               "Resource": [
                 {
                   "Fn::GetAtt": [
-                    "thumbnaildestBucket603418CB",
+                    "TestConstructdestBucketBA843F6A",
                     "Arn",
                   ],
                 },
@@ -377,7 +600,7 @@ def submit_response(event: dict, context, response_status: str, error_message: s
                     [
                       {
                         "Fn::GetAtt": [
-                          "thumbnaildestBucket603418CB",
+                          "TestConstructdestBucketBA843F6A",
                           "Arn",
                         ],
                       },
@@ -390,237 +613,14 @@ def submit_response(event: dict, context, response_status: str, error_message: s
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "thumbnailServiceRoleDefaultPolicy77FF3C45",
+        "PolicyName": "TestConstructthumbnailServiceRoleDefaultPolicy83483DBA",
         "Roles": [
           {
-            "Ref": "thumbnailServiceRole64148882",
+            "Ref": "TestConstructthumbnailServiceRoleC1AF2B65",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
-    },
-    "thumbnailbucket33B693F5": {
-      "DeletionPolicy": "Delete",
-      "Properties": {
-        "BucketName": "demo",
-        "Tags": [
-          {
-            "Key": "aws-cdk:auto-delete-objects",
-            "Value": "true",
-          },
-        ],
-      },
-      "Type": "AWS::S3::Bucket",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "thumbnailbucketAllowBucketNotificationsTos3thumbnailtestthumbnail0348EAAD33A04149": {
-      "Properties": {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": {
-          "Fn::GetAtt": [
-            "thumbnail56C9CCFB",
-            "Arn",
-          ],
-        },
-        "Principal": "s3.amazonaws.com",
-        "SourceAccount": {
-          "Ref": "AWS::AccountId",
-        },
-        "SourceArn": {
-          "Fn::GetAtt": [
-            "thumbnailbucket33B693F5",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
-    },
-    "thumbnailbucketAutoDeleteObjectsCustomResourceA67F37F2": {
-      "DeletionPolicy": "Delete",
-      "DependsOn": [
-        "thumbnailbucketPolicy0BB73683",
-      ],
-      "Properties": {
-        "BucketName": {
-          "Ref": "thumbnailbucket33B693F5",
-        },
-        "ServiceToken": {
-          "Fn::GetAtt": [
-            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::S3AutoDeleteObjects",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "thumbnailbucketNotifications023A9F12": {
-      "DependsOn": [
-        "thumbnailbucketAllowBucketNotificationsTos3thumbnailtestthumbnail0348EAAD33A04149",
-      ],
-      "Properties": {
-        "BucketName": {
-          "Ref": "thumbnailbucket33B693F5",
-        },
-        "Managed": true,
-        "NotificationConfiguration": {
-          "LambdaFunctionConfigurations": [
-            {
-              "Events": [
-                "s3:ObjectCreated:*",
-              ],
-              "LambdaFunctionArn": {
-                "Fn::GetAtt": [
-                  "thumbnail56C9CCFB",
-                  "Arn",
-                ],
-              },
-            },
-          ],
-        },
-        "ServiceToken": {
-          "Fn::GetAtt": [
-            "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::S3BucketNotifications",
-    },
-    "thumbnailbucketPolicy0BB73683": {
-      "Properties": {
-        "Bucket": {
-          "Ref": "thumbnailbucket33B693F5",
-        },
-        "PolicyDocument": {
-          "Statement": [
-            {
-              "Action": [
-                "s3:GetBucket*",
-                "s3:List*",
-                "s3:DeleteObject*",
-              ],
-              "Effect": "Allow",
-              "Principal": {
-                "AWS": {
-                  "Fn::GetAtt": [
-                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
-                    "Arn",
-                  ],
-                },
-              },
-              "Resource": [
-                {
-                  "Fn::GetAtt": [
-                    "thumbnailbucket33B693F5",
-                    "Arn",
-                  ],
-                },
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      {
-                        "Fn::GetAtt": [
-                          "thumbnailbucket33B693F5",
-                          "Arn",
-                        ],
-                      },
-                      "/*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-      },
-      "Type": "AWS::S3::BucketPolicy",
-    },
-    "thumbnaildestBucket603418CB": {
-      "DeletionPolicy": "Delete",
-      "Properties": {
-        "BucketName": "demo-resized",
-        "Tags": [
-          {
-            "Key": "aws-cdk:auto-delete-objects",
-            "Value": "true",
-          },
-        ],
-      },
-      "Type": "AWS::S3::Bucket",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "thumbnaildestBucketAutoDeleteObjectsCustomResource24CF7C83": {
-      "DeletionPolicy": "Delete",
-      "DependsOn": [
-        "thumbnaildestBucketPolicy0C5E9EF1",
-      ],
-      "Properties": {
-        "BucketName": {
-          "Ref": "thumbnaildestBucket603418CB",
-        },
-        "ServiceToken": {
-          "Fn::GetAtt": [
-            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::S3AutoDeleteObjects",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "thumbnaildestBucketPolicy0C5E9EF1": {
-      "Properties": {
-        "Bucket": {
-          "Ref": "thumbnaildestBucket603418CB",
-        },
-        "PolicyDocument": {
-          "Statement": [
-            {
-              "Action": [
-                "s3:GetBucket*",
-                "s3:List*",
-                "s3:DeleteObject*",
-              ],
-              "Effect": "Allow",
-              "Principal": {
-                "AWS": {
-                  "Fn::GetAtt": [
-                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
-                    "Arn",
-                  ],
-                },
-              },
-              "Resource": [
-                {
-                  "Fn::GetAtt": [
-                    "thumbnaildestBucket603418CB",
-                    "Arn",
-                  ],
-                },
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      {
-                        "Fn::GetAtt": [
-                          "thumbnaildestBucket603418CB",
-                          "Arn",
-                        ],
-                      },
-                      "/*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-      },
-      "Type": "AWS::S3::BucketPolicy",
     },
   },
   "Rules": {
