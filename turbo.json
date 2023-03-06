@@ -1,7 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
-    "clean": {},
+    "clean": {
+      "cache": false
+    },
     "build": {
       "dependsOn": [
         "^build"
@@ -10,10 +12,20 @@
         "dist/**"
       ]
     },
-    "deploy": {},
-    "destroy": {},
-    "test": {},
-    "testu": {},
-    "test:integ": {}
+    "deploy": {
+      "cache": false
+    },
+    "destroy": {
+      "cache": false
+    },
+    "test": {
+      "cache": false
+    },
+    "testu": {
+      "cache": false
+    },
+    "test:integ": {
+      "cache": false
+    }
   }
 }

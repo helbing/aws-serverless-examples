@@ -3,6 +3,5 @@
   "include": [
     "bin",
     "lib",
-    "tests/integ.*.ts"
   ]
 }

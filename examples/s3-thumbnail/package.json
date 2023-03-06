@@ -8,7 +8,7 @@
     "destroy": "pnpm run build && cdk destroy",
     "test": "jest",
     "testu": "jest --updateSnapshot",
-    "test:integ": "pnpm run build &&  integ-runner --directory tests --update-on-failed && pnpm run clean"
+    "test:integ": "integ-runner --directory tests -l typescript --update-on-failed -v"
   },
   "author": "helbing",
   "license": "MIT",

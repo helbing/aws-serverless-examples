@@ -15,3 +15,7 @@ cdk-integ.out.*
 
 # jest
 coverage
+
+# turbo
+.turbo/
+dist
