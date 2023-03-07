@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "../."
+    },
+    {
+      "name": "@ase/s3-thumbnail",
+      "path": "../examples/s3-thumbnail"
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": ["root"]
+  }
+}
