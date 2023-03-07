@@ -1,18 +1,13 @@
 .DS_Store
 
-node_modules
+node_modules/
 .pnpm-debug.log*
-.pnpm-store
+.pnpm-store/
 
 # CDK asset staging directory
 .cdk.staging
-cdk.out
+cdk.out/
 cdk-integ.out.*
-integ.*.snapshot
-
-# less js
-*.js
-*.d.ts
 
 # jest
 coverage

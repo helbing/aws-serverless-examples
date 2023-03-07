@@ -28,7 +28,7 @@ importers:
 
   examples/s3-thumbnail:
     specifiers:
-      '@ase/tsconfig': workspace:^1.0.0
+      '@ase/tsconfig': workspace:^0.0.0
       '@aws-cdk/integ-runner': ^2.67.0
       '@aws-cdk/integ-tests-alpha': 2.67.0-alpha.0
       '@aws-sdk/client-s3': ^3.282.0
