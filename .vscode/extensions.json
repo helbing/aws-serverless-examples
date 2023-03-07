@@ -5,6 +5,8 @@
     "ms-vscode.vscode-typescript-next",
     "Orta.vscode-jest",
     "esbenp.prettier-vscode",
-    "EditorConfig.EditorConfig"
+    "EditorConfig.EditorConfig",
+    "christian-kohler.npm-intellisense",
+    "DavidAnson.vscode-markdownlint"
   ]
 }
