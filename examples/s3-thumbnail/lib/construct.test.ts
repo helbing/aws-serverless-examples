@@ -1,12 +1,14 @@
 import { Template } from "aws-cdk-lib/assertions"
 import { App, Stack } from "aws-cdk-lib"
-import { S3Thumbnail, S3ThumbnailStackProps } from "./construct"
+import { S3Thumbnail } from "./construct"
 
 describe("Test construct build", () => {
-  test("Expect throw Error, Bucket is undefined", () => {
+  test("Expect throw Error, Bucket is empty string", () => {
     expect(() => {
-      new S3Thumbnail(new Stack(), "TestConstruct", {} as S3ThumbnailStackProps)
-    }).toThrow(new Error("Bucket is undefined"))
+      new S3Thumbnail(new Stack(), "TestConstruct", {
+        bucketName: "",
+      })
+    }).toThrow(new Error("Bucket is empty string"))
   })
 
   test("Expect throw Error, ResizedWidth between 1 and 300", () => {
@@ -14,7 +16,7 @@ describe("Test construct build", () => {
       new S3Thumbnail(new Stack(), "TestConstruct", {
         bucketName: "demo",
         resizeWidth: -1,
-      } as S3ThumbnailStackProps)
+      })
     }).toThrow(new Error("ResizedWidth between 1 and 300"))
   })
 
@@ -23,7 +25,7 @@ describe("Test construct build", () => {
       new S3Thumbnail(new Stack(), "TestConstruct", {
         bucketName: "demo",
         imageTypes: [],
-      } as S3ThumbnailStackProps)
+      })
     }).toThrow(new Error("No image types"))
   })
 

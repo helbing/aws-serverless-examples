@@ -77,13 +77,13 @@ export class S3Thumbnail extends Construct {
    * @param props {ThumbnailStackProps}
    * @throws {BucketUndefinedError}
    */
-  constructor(scope: Construct, id: string, props?: S3ThumbnailStackProps) {
+  constructor(scope: Construct, id: string, props: S3ThumbnailStackProps) {
     super(scope, id)
 
-    const bucketName = props?.bucketName
+    const bucketName = props.bucketName
     const destBucketName = bucketName + "-resized"
-    if (bucketName == undefined) {
-      throw new Error("Bucket is undefined")
+    if (bucketName.length == 0) {
+      throw new Error("Bucket is empty string")
     }
 
     const resizWidth = props?.resizeWidth || 100
