@@ -34,6 +34,8 @@ describe("Test construct build", () => {
       bucketName: "demo",
     })
     const template = Template.fromStack(stack).toJSON()
+    // the S3Key value will be changed with build, because we set
+    // `nodeModules: ["sharp"]` in NodejsFunction
     expect(template).toMatchSnapshot({
       Resources: {
         TestConstructthumbnail2E204B2A: {
