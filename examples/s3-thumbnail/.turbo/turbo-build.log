@@ -1,8 +1,0 @@
-
-> @ase/s3-thumbnail@1.0.0 build /Users/helbing/workspace/aws-serverless-examples/examples/s3-thumbnail
-> pnpm run clean && tsc
-
-
-> @ase/s3-thumbnail@1.0.0 clean /Users/helbing/workspace/aws-serverless-examples/examples/s3-thumbnail
-> rimraf bin/*.js bin/*.d.ts lib/*.js lib/*.d.ts tests/integ.*.js tests/integ.*.d.ts
-
