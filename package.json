@@ -1,7 +1,6 @@
 {
-  "name": "s3-thumbnail",
+  "name": "aws-serverless-exmaples",
   "version": "0.0.0",
-  "description": "s3 => generate thumbnail lambda => destination s3",
   "workspaces": [
     "examples/*"
   ],
