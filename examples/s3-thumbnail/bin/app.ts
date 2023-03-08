@@ -1,10 +1,10 @@
 #!/usr/bin/env ts-node
 
 import "source-map-support/register"
-import * as cdk from "aws-cdk-lib"
+import { App } from "aws-cdk-lib"
 import CDKStack from "../lib/index"
 
-const app = new cdk.App()
+const app = new App()
 
 new CDKStack(app, "AWSServerlessExamplesS3Thumbnail", {
   env: {
