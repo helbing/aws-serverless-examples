@@ -8,6 +8,7 @@
     "typescript"
   ],
   "scripts": {
+    "clean": "turbo run clean",
     "build": "turbo run build",
     "cdk": "turbo run cdk --",
     "test": "turbo run test",

@@ -3,5 +3,11 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "generators"
-  }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+  ]
 }
