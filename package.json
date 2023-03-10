@@ -1,23 +1,24 @@
 {
   "name": "aws-serverless-exmaples",
   "version": "0.0.0",
-  "workspaces": [
-    "examples/*"
-  ],
   "keywords": [
     "aws",
     "serverless",
+    "aws-cdk",
     "typescript"
   ],
   "scripts": {
+    "build": "turbo run build",
     "cdk": "turbo run cdk --",
     "test": "turbo run test",
     "testu": "turbo run testu",
-    "test:integ": "turbo run test:integ"
+    "test:integ": "turbo run test:integ",
+    "create": "pnpm run build --filter @ase/generator-example && npx yo @ase/example --"
   },
   "author": "helbing",
   "license": "MIT",
   "devDependencies": {
+    "@ase/generator-example": "workspace:^0.0.0",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
     "eslint": "^8.35.0",
@@ -27,6 +28,7 @@
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.4",
-    "turbo": "^1.8.3"
+    "turbo": "^1.8.3",
+    "yo": "^4.3.1"
   }
 }

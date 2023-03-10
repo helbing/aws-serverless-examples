@@ -1,0 +1,7 @@
+{
+  "extends": "@ase/tsconfig/recommended",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "generators"
+  }
+}
