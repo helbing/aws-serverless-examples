@@ -19,6 +19,7 @@
     "yeoman-test": "^7.4.0"
   },
   "dependencies": {
+    "chalk": "4",
     "yeoman-generator": "^5.8.0"
   }
 }
