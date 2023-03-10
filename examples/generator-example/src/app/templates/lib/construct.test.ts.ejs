@@ -1,0 +1,12 @@
+import { Template } from "aws-cdk-lib/assertions"
+import { App, Stack } from "aws-cdk-lib"
+import { Test } from "./construct"
+
+describe("Test construct build", () => {
+  test("Expect match snapshot", () => {
+    const app = new App()
+    const stack = new Stack(app, "TestStack")
+    new Test(stack, "TestConstruct")
+    expect(Template.fromStack(stack).toJSON()).toMatchSnapshot()
+  })
+})

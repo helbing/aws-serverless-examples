@@ -1,0 +1,11 @@
+import { APIGatewayProxyResultV2 } from "aws-lambda"
+import { handler } from "./index"
+
+describe("Run lambda handler", () => {
+  test("Expect response Hello world", async () => {
+    await expect(handler()).resolves.toBe({
+      statusCode: 200,
+      body: "Hello world",
+    } as APIGatewayProxyResultV2)
+  })
+})

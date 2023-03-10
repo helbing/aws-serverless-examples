@@ -5,6 +5,10 @@
       "path": "../."
     },
     {
+      "name": "generator-example",
+      "path": "../examples/generator-example"
+    },
+    {
       "name": "@ase/s3-thumbnail",
       "path": "../examples/s3-thumbnail"
     }
