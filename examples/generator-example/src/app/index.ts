@@ -1,3 +1,4 @@
+import * as path from "path"
 import Generator, {
   GeneratorOptions as BaseGeneratorOptions,
 } from "yeoman-generator"
@@ -42,7 +43,13 @@ export default class extends Generator<GeneratorOptions> {
   }
 
   async writing() {
-    this.sourceRoot()
+    console.log(this.sourceRoot())
+    const destDir = path.join(
+      this.destinationPath(),
+      this.options.basePath,
+      this.options.name,
+    )
+    console.log(destDir)
   }
 
   async install() {

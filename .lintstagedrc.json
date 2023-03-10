@@ -1,0 +1,5 @@
+{
+  "examples/**/*.{ts,tsx}": [
+    "eslint --fix"
+  ]
+}
