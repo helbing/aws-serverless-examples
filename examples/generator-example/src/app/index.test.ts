@@ -50,3 +50,51 @@ describe("Test generate", () => {
     )
   })
 })
+
+describe("Test generate with autoCreateDir", () => {
+  const basePath = "examples"
+  const name = "test"
+
+  beforeAll(async () => {
+    await helpers
+      .run(path.join(__dirname, "../../generators/app"))
+      .inDir(path.join(__dirname, "tmp"))
+      .withArguments([basePath, "true"])
+      .withPrompts({
+        name: name,
+      } as IAnswers)
+  })
+
+  afterAll(() => {
+    rimraf.sync(path.join(__dirname, "tmp"))
+  })
+
+  const prefixPath = path.join(basePath, name)
+
+  const files = [
+    "bin/app.ts",
+    "lambda/index.test.ts",
+    "lambda/index.ts",
+    "lib/construct.test.ts",
+    "lib/construct.ts",
+    "lib/index.ts",
+    "cdk.json",
+    "jest.config.ts",
+    "package.json",
+    "snapshotResolver.ts",
+    "tsconfig.json",
+  ]
+
+  for (const file of files) {
+    test(`Expect ${prefixPath}/${file} exist`, () => {
+      assert.file(path.join(__dirname, "tmp", prefixPath, file))
+    })
+  }
+
+  test(`Expect ${prefixPath}/package.json have correct name`, () => {
+    assert.fileContent(
+      path.join(__dirname, "tmp", prefixPath, "package.json"),
+      `"name": "@ase/${name}"`,
+    )
+  })
+})
