@@ -16,7 +16,7 @@
     "test": "turbo run test",
     "testu": "turbo run testu",
     "test:integ": "turbo run test:integ",
-    "create": "pnpm run build --filter @ase/generator-example && npx yo @ase/example --"
+    "create": "pnpm run build --filter @ase/generator-example && npx yo @ase/example examples true"
   },
   "author": "helbing",
   "license": "MIT",

@@ -18,6 +18,9 @@ export type GeneratorOptions = BaseGeneratorOptions & {
 
   // Example name
   name: string
+
+  // Is teting
+  isTesting: number
 }
 
 export default class extends Generator<GeneratorOptions> {
@@ -49,7 +52,7 @@ export default class extends Generator<GeneratorOptions> {
         default: "example",
         message: "Enter example name(at least 3 characters):",
         validate: (input: string) => {
-          return input.length < 3
+          return input.length >= 3
         },
       },
     ]).then((answers: IAnswers) => {
@@ -126,10 +129,14 @@ export default class extends Generator<GeneratorOptions> {
     }
   }
 
-  async end() {
-    // postinstall
-    // this.spawnCommandSync("pnpm", ["install"])
+  async install() {
+    if (this.options.isTesting > 0) {
+      return
+    }
+    this.spawnCommandSync("pnpm", ["install"])
+  }
 
+  async end() {
     this.log(chalk.yellow("Thanks for using the generator!"))
   }
 }

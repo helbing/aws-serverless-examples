@@ -5,7 +5,7 @@ import path from "path"
 import helpers from "yeoman-test"
 import assert from "yeoman-assert"
 import { rimraf } from "rimraf"
-import { IAnswers } from "./index"
+import { IAnswers, GeneratorOptions } from "./index"
 
 describe("Test generate", () => {
   const name = "test"
@@ -14,6 +14,9 @@ describe("Test generate", () => {
     await helpers
       .run(path.join(__dirname, "../../generators/app"))
       .inDir(path.join(__dirname, "tmp"))
+      .withOptions({
+        isTesting: 1,
+      } as GeneratorOptions)
       .withPrompts({
         name: name,
       } as IAnswers)
@@ -59,6 +62,9 @@ describe("Test generate with autoCreateDir", () => {
     await helpers
       .run(path.join(__dirname, "../../generators/app"))
       .inDir(path.join(__dirname, "tmp"))
+      .withOptions({
+        isTesting: 1,
+      } as GeneratorOptions)
       .withArguments([basePath, "true"])
       .withPrompts({
         name: name,
