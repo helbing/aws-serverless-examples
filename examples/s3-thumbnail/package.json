@@ -1,6 +1,7 @@
 {
   "name": "@ase/s3-thumbnail",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "cdk": "cdk",
     "test": "jest --detectOpenHandles",

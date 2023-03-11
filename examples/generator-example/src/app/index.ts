@@ -13,6 +13,9 @@ export type GeneratorOptions = BaseGeneratorOptions & {
   // Example base path
   basePath: string
 
+  // Auto create dir
+  autoCreateDir: number
+
   // Example name
   name: string
 }
@@ -22,10 +25,19 @@ export default class extends Generator<GeneratorOptions> {
     super(args, options)
 
     this.desc("Generate a example.")
+
     this.argument("basePath", {
+      type: String,
       description: "Create example base path",
       required: false,
-      default: "examples",
+      default: "",
+    })
+
+    this.argument("autoCreateDir", {
+      type: Number,
+      description: "Create dir with example name",
+      required: false,
+      default: 0,
     })
   }
 
@@ -35,7 +47,10 @@ export default class extends Generator<GeneratorOptions> {
         type: "input",
         name: "name",
         default: "example",
-        message: "Enter example name:",
+        message: "Enter example name(at least 3 characters):",
+        validate: (input: string) => {
+          return input.length < 3
+        },
       },
     ]).then((answers: IAnswers) => {
       this.options.name = answers.name
@@ -95,18 +110,26 @@ export default class extends Generator<GeneratorOptions> {
       },
     ]
 
+    let basePath = this.options.basePath
+    if (this.options.autoCreateDir != 0) {
+      basePath = path.join(this.options.basePath, this.options.name)
+    }
+
     for (const item of items) {
       this.fs.copyTpl(
         this.templatePath(item.from),
-        this.destinationPath(
-          path.join(this.options.basePath, this.options.name, item.to),
-        ),
-        this.options,
+        this.destinationPath(path.join(basePath, item.to)),
+        {
+          name: this.options.name,
+        },
       )
     }
   }
 
   async end() {
+    // postinstall
+    // this.spawnCommandSync("pnpm", ["install"])
+
     this.log(chalk.yellow("Thanks for using the generator!"))
   }
 }

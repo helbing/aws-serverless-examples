@@ -18,3 +18,4 @@ dist
 
 # yeoman
 generators/
+tmp/

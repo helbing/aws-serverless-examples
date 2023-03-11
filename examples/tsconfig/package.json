@@ -1,7 +1,7 @@
 {
   "name": "@ase/tsconfig",
   "version": "0.0.0",
-  "description": "tsconfig",
+  "type": "module",
   "keywords": [
     "tsconfig"
   ],
