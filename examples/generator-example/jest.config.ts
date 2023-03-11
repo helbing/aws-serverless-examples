@@ -7,6 +7,7 @@ const config: Config = {
   testRunner: "jest-circus/runner",
   testEnvironment: "node",
   snapshotResolver: "<rootDir>/snapshotResolver.ts",
+  modulePathIgnorePatterns: ["<rootDir>/src/app/tmp"],
 }
 
 export default config

@@ -7,39 +7,46 @@ import assert from "yeoman-assert"
 import { rimraf } from "rimraf"
 import { IAnswers } from "./index"
 
-describe("generator test", () => {
-  describe("test", () => {
-    beforeEach(async () => {
-      await helpers
-        .run(path.join(__dirname, "../../generators/app/"))
-        .inDir(path.join(__dirname, "tmp"))
-        .withPrompts({
-          name: "test",
-        } as IAnswers)
-    })
+describe("Test generate", () => {
+  const name = "test"
 
-    afterEach(() => {
-      rimraf.sync(path.join(__dirname, "tmp"))
-    })
+  beforeAll(async () => {
+    await helpers
+      .run(path.join(__dirname, "../../generators/app"))
+      .inDir(path.join(__dirname, "tmp"))
+      .withPrompts({
+        name: name,
+      } as IAnswers)
+  })
 
-    test("runs correctly", () => {
-      const templates = [
-        "bin/app.ts",
-        "lambda/index.test.ts",
-        "lambda/index.ts",
-        "lib/construct.test.ts",
-        "lib/construct.ts",
-        "lib/index.ts",
-        "cdk.json",
-        "jest.config.ts",
-        "package.json",
-        "snapshotResolver.ts",
-        "tsconfig.json",
-      ]
+  afterAll(() => {
+    rimraf.sync(path.join(__dirname, "tmp"))
+  })
 
-      for (const tempalte of templates) {
-        assert.file(path.join(__dirname, `tmp/${tempalte}`))
-      }
+  const files = [
+    "bin/app.ts",
+    "lambda/index.test.ts",
+    "lambda/index.ts",
+    "lib/construct.test.ts",
+    "lib/construct.ts",
+    "lib/index.ts",
+    "cdk.json",
+    "jest.config.ts",
+    "package.json",
+    "snapshotResolver.ts",
+    "tsconfig.json",
+  ]
+
+  for (const file of files) {
+    test(`Expect ${file} exist`, () => {
+      assert.file(path.join(__dirname, `tmp/${file}`))
     })
+  }
+
+  test("Expect package.json have correct name", () => {
+    assert.fileContent(
+      path.join(__dirname, "tmp/package.json"),
+      `"name": "@ase/${name}"`,
+    )
   })
 })

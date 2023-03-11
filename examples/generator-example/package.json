@@ -9,7 +9,7 @@
     "clean": "rimraf generators",
     "copytemplates": "cd src && cpy **/templates ../generators",
     "build": "pnpm run clean && tsc -p tsconfig.build.json && pnpm run copytemplates",
-    "test": "jest --detectOpenHandles"
+    "test": "pnpm run build && jest --detectOpenHandles"
   },
   "author": "helbing",
   "license": "MIT",
