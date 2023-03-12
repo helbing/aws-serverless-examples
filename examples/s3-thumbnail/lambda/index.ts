@@ -10,6 +10,16 @@ import { StatusCodes } from "http-status-codes"
 import { ThumbnailLambdaEnvs } from "../lib/construct"
 import thumbnail from "./thumbnail"
 
+/**
+ * Lambda function
+ *
+ * @param event s3 event
+ * @throws {Error} Destination bucket unset
+ * @throws {Error} Illegal record size, s3 event records = 0 or records > 1
+ * @throws {Error} Not supported image type
+ * @throws {Error} S3 get object failed
+ * @throws {Error} S3 put object failed
+ */
 export async function handler(event: S3Event) {
   const envs = process.env as ThumbnailLambdaEnvs
 

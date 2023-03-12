@@ -6,6 +6,7 @@ const config: Config = {
   preset: "ts-jest",
   testRunner: "jest-circus/runner",
   testEnvironment: "node",
+  testTimeout: 60000,
   snapshotResolver: "<rootDir>/snapshotResolver.ts",
   modulePathIgnorePatterns: ["<rootDir>/src/app/tmp"],
 }

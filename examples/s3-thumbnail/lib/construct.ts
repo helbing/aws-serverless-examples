@@ -19,14 +19,14 @@ export interface ThumbnailLambdaEnvs {
   RESIZE_WIDTH: string
 
   /**
-   * SupportImageType
+   * Support image type
    *
    * @default png,jpg
    */
   SUPPORT_IMAGE_TYPES: string
 }
 
-export enum imageTypes {
+export enum ImageTypes {
   PNG = "png",
   JPEG = "jpg",
   GIF = "gif",
@@ -50,11 +50,21 @@ export interface S3ThumbnailStackProps {
   /**
    * Image types
    *
-   * @default [imageTypes.PNG, imageTypes.JPEG]
+   * @default [ImageTypes.PNG,ImageTypes.JPEG]
    */
-  readonly imageTypes?: imageTypes[]
+  readonly imageTypes?: ImageTypes[]
 }
 
+/**
+ * S3Thumbnail implement the architecture of users upload image to s3 bucket,
+ * it will triiger a lambda function, the lambda function will generate
+ * thumbnails, finally the lambda function will upload thumbnails to s3
+ * destination bucket
+ *
+ * @throws {Error} Bucket is empty string
+ * @throws {Error} ResizedWidth must between 1 and 300
+ * @throws {Error} No image types
+ */
 export class S3Thumbnail extends Construct {
   /**
    * Upload bucket
@@ -71,12 +81,6 @@ export class S3Thumbnail extends Construct {
    */
   public readonly handler: NodejsFunction
 
-  /**
-   * @param scope {Construct}
-   * @param id string
-   * @param props {ThumbnailStackProps}
-   * @throws {BucketUndefinedError}
-   */
   constructor(scope: Construct, id: string, props: S3ThumbnailStackProps) {
     super(scope, id)
 
@@ -88,12 +92,12 @@ export class S3Thumbnail extends Construct {
 
     const resizWidth = props?.resizeWidth || 100
     if (resizWidth < 1 || resizWidth > 300) {
-      throw new Error("ResizedWidth between 1 and 300")
+      throw new Error("ResizedWidth must between 1 and 300")
     }
 
     const supportImageTypes = props?.imageTypes || [
-      imageTypes.PNG,
-      imageTypes.JPEG,
+      ImageTypes.PNG,
+      ImageTypes.JPEG,
     ]
     if (supportImageTypes.length == 0) {
       throw new Error("No image types")

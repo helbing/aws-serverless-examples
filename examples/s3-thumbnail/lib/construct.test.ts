@@ -11,13 +11,13 @@ describe("Test construct build", () => {
     }).toThrow(new Error("Bucket is empty string"))
   })
 
-  test("Expect throw Error, ResizedWidth between 1 and 300", () => {
+  test("Expect throw Error, ResizedWidth must between 1 and 300", () => {
     expect(() => {
       new S3Thumbnail(new Stack(), "TestConstruct", {
         bucketName: "demo",
         resizeWidth: -1,
       })
-    }).toThrow(new Error("ResizedWidth between 1 and 300"))
+    }).toThrow(new Error("ResizedWidth must between 1 and 300"))
   })
 
   test("Expect throw Error, No image types", () => {

@@ -5,21 +5,33 @@ import Generator, {
 import chalk from "chalk"
 
 export type IAnswers = {
-  // Example name
+  /**
+   * Example name
+   */
   name: string
 }
 
 export type GeneratorOptions = BaseGeneratorOptions & {
-  // Example base path
+  /**
+   * Example base path
+   */
   basePath: string
 
-  // Auto create dir
+  /**
+   * Auto create dir, if set value greater than 0, it means will auto create
+   * dir $PWD/{basePath}/{name}, and the template will be generated in this
+   * dir
+   */
   autoCreateDir: number
 
-  // Example name
+  /**
+   * Example name
+   */
   name: string
 
-  // Is teting
+  /**
+   * Is teting, if set value greater than 0, it means is testing
+   */
   isTesting: number
 }
 
@@ -62,7 +74,9 @@ export default class extends Generator<GeneratorOptions> {
 
   async writing() {
     type item = {
+      // template file
       from: string
+      // destination file
       to: string
     }
 
@@ -118,14 +132,15 @@ export default class extends Generator<GeneratorOptions> {
       basePath = path.join(this.options.basePath, this.options.name)
     }
 
+    const context = {
+      name: this.options.name,
+    }
+
     for (const item of items) {
-      this.fs.copyTpl(
-        this.templatePath(item.from),
-        this.destinationPath(path.join(basePath, item.to)),
-        {
-          name: this.options.name,
-        },
-      )
+      const from = this.templatePath(item.from)
+      const to = this.destinationPath(path.join(basePath, item.to))
+
+      this.fs.copyTpl(from, to, context)
     }
   }
 
@@ -133,6 +148,7 @@ export default class extends Generator<GeneratorOptions> {
     if (this.options.isTesting > 0) {
       return
     }
+    // install dependences
     this.spawnCommandSync("pnpm", ["install"])
   }
 
