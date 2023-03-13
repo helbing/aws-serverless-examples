@@ -15,6 +15,8 @@ export interface ThumbnailLambdaEnvs {
 
   /**
    * Thumbnail width
+   *
+   * @default 100
    */
   RESIZE_WIDTH: string
 
