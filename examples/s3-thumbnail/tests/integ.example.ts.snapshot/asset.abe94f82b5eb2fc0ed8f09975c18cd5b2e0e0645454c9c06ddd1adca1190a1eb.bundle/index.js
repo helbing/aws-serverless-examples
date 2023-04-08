@@ -787,15 +787,17 @@ var require_helpers_internal = __commonJS({
   "../../aws-cdk-lib/assertions/lib/helpers-internal/index.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      k2 === void 0 && (k2 = k), Object.defineProperty(o, k2, { enumerable: true, get: function() {
+      k2 === void 0 && (k2 = k);
+      var desc = Object.getOwnPropertyDescriptor(m, k);
+      (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) && (desc = { enumerable: true, get: function() {
         return m[k];
-      } });
+      } }), Object.defineProperty(o, k2, desc);
     } : function(o, m, k, k2) {
       k2 === void 0 && (k2 = k), o[k2] = m[k];
     });
     var __exportStar = exports && exports.__exportStar || function(m, exports2) {
       for (var p in m)
-        p !== "default" && !exports2.hasOwnProperty(p) && __createBinding(exports2, m, p);
+        p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p) && __createBinding(exports2, m, p);
     };
     Object.defineProperty(exports, "__esModule", { value: true }), __exportStar((init_match(), __toCommonJS(match_exports)), exports), __exportStar((init_matcher(), __toCommonJS(matcher_exports)), exports);
   }
@@ -905,7 +907,10 @@ var CustomResourceHandler = class {
       hostname: parsedUrl.hostname,
       path: parsedUrl.path,
       method: "PUT",
-      headers: { "content-type": "", "content-length": responseBody.length }
+      headers: {
+        "content-type": "",
+        "content-length": Buffer.byteLength(responseBody, "utf8")
+      }
     };
     return new Promise((resolve, reject) => {
       try {
@@ -1060,7 +1065,7 @@ function decodeCall(call) {
   try {
     const parsed = JSON.parse(call);
     return parsed;
-  } catch (e) {
+  } catch {
     return call;
   }
 }
